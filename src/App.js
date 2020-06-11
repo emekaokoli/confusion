@@ -13,9 +13,8 @@ export class App extends Component {
       dishes:DISHES
     }
   }
-     
-         render() {
-           return (
+    render() {
+      return (
            <div>
            <Navbar dark color="primary">
              <div className="container">
