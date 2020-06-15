@@ -1,18 +1,24 @@
+
 import React from 'react';
 import { Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
 
 
-const DishDetails = ({dish})  => {
+
+const DishDetails = (props)  => {
+
+  console.log('==================DISH COMPONENT==================')
+  console.log(props.dish.name);
+  console.log('====================================');
       return (
-        <div>
+        <>
           <Card>
-            <CardImg top src={dish.dish.image} alt={dish.dish.name} />
+            <CardImg top src={props.dish.image} alt={props.dish.name} />
             <CardBody>
-              <CardTitle>{dish.dish.name}</CardTitle>
-              <CardText>{dish.dish.description}</CardText>
+              <CardTitle>{props.dish.name}</CardTitle>
+              <CardText>{props.dish.description}</CardText>
             </CardBody>
           </Card>
-        </div>
+        </>
       )
 }
 
