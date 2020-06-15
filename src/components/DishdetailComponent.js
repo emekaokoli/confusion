@@ -4,20 +4,30 @@ import { Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
 
  
 
-export default class App extends React.Component{
-   renderDish(dish){
+
+ 
+  
+   function RenderDish({dish}) {
     if (dish !== null) {
-      return 
-      
-    } else {
-      return <></>
-    }
+    return (
+      <div>
+        <Card>
+          <CardImg top src={dish.image} alt={dish.name} />
+          <CardBody>
+            <CardTitle>{dish.name}</CardTitle>
+            <CardText>{dish.description}</CardText>
+          </CardBody>
+        </Card>
+      </div>
+    )
+    }  else {
+       return <></>
+     }
   }
 
- renderComments(comment){
- 
-   if (comment !== null) {
-     return comment.comments.map((param) => {
+ function RenderComments({comments}) {
+   if (comments !== null) {
+     return comments.map((param) => {
        return (
          <ul key={param.id} className='list-unstyled'>
            <li>{param.comment}</li>
@@ -36,20 +46,14 @@ export default class App extends React.Component{
      return <></>
    }
   }
-  render() {
-    console.log('====================================');
-    console.log(this.props);
-    console.log('====================================');
-      return (
-        <>
-          <Card>
-            <CardImg top src={this.props.dish.image} alt={this.props.dish.name} />
-            <CardBody>
-              <CardTitle>{this.props.dish.name}</CardTitle>
-              <CardText>{this.props.dish.description}</CardText>
-            </CardBody>
-          </Card>
-        </>
-      )
-}
-}
+
+  const  DishDetail = (props) => {
+     return (
+       <>
+         <RenderDish dish={props.dish} />
+         <RenderComments comments={props.dish.comments} />
+       </>
+     )
+  }
+
+export default DishDetail

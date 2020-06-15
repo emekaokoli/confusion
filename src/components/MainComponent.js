@@ -13,9 +13,12 @@ export default class Main extends Component {
       selectedDish:null
     }
   }
+
   onDishSelected(dishId){
     this.setState({selectedDish:dishId})
   }
+
+  
   render() {
     return (
       <>
