@@ -4,6 +4,9 @@ import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
 
 
    function RenderMenuItem ({dish, onClick}) {
+     console.log('=================Menu Items===================');
+     console.log(dish);
+     console.log('====================================');
         return (
             <Card
                 onClick={() => onClick(dish.id)}>
@@ -16,10 +19,11 @@ import { Card, CardImg, CardImgOverlay, CardTitle } from 'reactstrap';
     }
 
     const Menu = (props) => {
+   
       const menu = props.dishes.map((dish) => {
         return (
           <div className='col-12 col-md-5 m-1' key={dish.id}>
-            <RenderMenuItem dish={dish} onClick={props.onClick} />
+            <RenderMenuItem dish={dish}  />
           </div>
         )
       })

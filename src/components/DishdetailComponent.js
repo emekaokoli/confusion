@@ -8,6 +8,9 @@ import { Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
  
   
    function RenderDish({dish}) {
+     console.log('================render dish====================');
+     console.log();
+     console.log('====================================');
     if (dish !== null) {
     return (
       <div>
@@ -26,6 +29,9 @@ import { Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
   }
 
  function RenderComments({comments}) {
+   console.log('================render comments====================');
+   console.log(comments);
+   console.log('====================================');
    if (comments !== null) {
      return comments.map((param) => {
        return (
@@ -48,6 +54,9 @@ import { Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
   }
 
   const  DishDetail = (props) => {
+    console.log('=================dishdetails===================');
+    console.log(props);
+    console.log('====================================');
      return (
        <>
          <RenderDish dish={props.dish} />
