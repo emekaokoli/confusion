@@ -1,16 +1,6 @@
 import React from 'react'
-import {
-  Card,
+import { Card, CardBody, CardImg, CardSubtitle, CardText, CardTitle } from 'reactstrap'
 
-
-  CardBody, CardImg,
-
-
-
-  CardSubtitle, CardText,
-
-  CardTitle
-} from 'reactstrap'
 
 function RenderCard({ item }) {
   return (

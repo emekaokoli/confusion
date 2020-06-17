@@ -1,16 +1,10 @@
 
 import React from 'react';
 import { Link } from 'react-router-dom';
-import {
-  Breadcrumb, BreadcrumbItem, Card, CardBody, CardImg, CardText,
-  CardTitle
-} from 'reactstrap';
+import { Breadcrumb, BreadcrumbItem, Card, CardBody, CardImg, CardText, CardTitle } from 'reactstrap';
 
 
-
- 
-  
-   function RenderDish({dish}) {
+function RenderDish({dish}) {
     if (dish !== null) {
     return (
       <div>
