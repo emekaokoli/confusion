@@ -60,6 +60,15 @@ class Contact extends Component {
         email: false,
       },
     })
+    // if (this.state.firstname === '') {
+    //   return
+    // } else if (this.state.lastname === '') {
+    //   return
+    // } else if (this.state.telnum === '') {
+    //   return
+    // } else if (this.state.email === '') {
+    //   return
+    // }
   }
 handleBlur= (field) => (event) =>{
   this.setState({
