@@ -1,39 +1,15 @@
 import React, { Component } from 'react';
 import { NavLink } from 'react-router-dom';
 import {
-    Button, Collapse,
-
-
-
-
-
-
-
-
-
-
-    Form,
-    FormGroup,
-    Input, Jumbotron,
-
-
-
-
-
-
-
-
-
-
-
-
-    Label, Modal,
-
-    ModalBody, ModalHeader, Nav,
-    Navbar,
-    NavbarBrand,
-    NavbarToggler,
-    NavItem
+  Button, Collapse,
+  Form,
+  FormGroup,
+  Input, Jumbotron, Label, Modal,
+  ModalBody, ModalHeader, Nav,
+  Navbar,
+  NavbarBrand,
+  NavbarToggler,
+  NavItem
 } from 'reactstrap';
 
 class Header extends Component {
