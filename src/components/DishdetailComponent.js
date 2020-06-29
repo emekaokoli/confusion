@@ -80,10 +80,9 @@ class CommentForm extends React.Component {
 
   handleSubmit(e) {
     this.toggle()
-    console.log('Current State is: ' + JSON.stringify(e))
-    alert('Current State is: ' + JSON.stringify(e))
-
-    e.preventDefault()
+    // console.log('Current State is: ' + JSON.stringify(e))
+    // alert('Current State is: ' + JSON.stringify(e))
+    // e.preventDefault()
     this.setState({
       author: '',
       ratings: '',
