@@ -1,15 +1,7 @@
 import React from 'react'
 import { Control, Errors, LocalForm } from 'react-redux-form'
-import { Link } from 'react-router-dom'
 import {
-  Breadcrumb,
-  BreadcrumbItem,
   Button,
-  Card,
-  CardBody,
-  CardImg,
-  CardText,
-  CardTitle,
   Col,
   Label,
   Modal,
@@ -18,52 +10,7 @@ import {
   Row
 } from 'reactstrap'
 
-function RenderDish({ dish }) {
-  if (dish !== null) {
-    return (
-      <div>
-        <Card>
-          <CardImg top src={dish.image} alt={dish.name} />
-          <CardBody>
-            <CardTitle>{dish.name}</CardTitle>
-            <CardText>{dish.description}</CardText>
-          </CardBody>
-        </Card>
-      </div>
-    )
-  } else {
-    return <></>
-  }
-}
-
-function RenderComments({comments, addComment, dishId}){
-  if (comments !== null) {
-     
-    return comments.map((param) => {
-      return (
-        <div key={param.id}>
-          <ul className='list-unstyled'>
-            <li>{param.comment}</li>
-            <li>
-              --{param.author} ,
-              {new Intl.DateTimeFormat('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: '2-digit',
-              }).format(new Date(param.date))}
-            </li>
-          </ul>
-          
-        </div>
-      )
-    })
-   
-  } else {
-    return <></>
-  }
-}
-
-class CommentForm extends React.Component {
+export default class CommentForm extends React.Component {
   constructor(props) {
     super(props)
 
@@ -188,7 +135,7 @@ class CommentForm extends React.Component {
                 type='submit'
                 // value='submit'
                 color='primary'
-                onClick={(e) => this.handleSubmit(e)}
+                // onClick={(e) => this.handleSubmit(e)}
               >
                 Submit
               </Button>
@@ -199,37 +146,3 @@ class CommentForm extends React.Component {
     )
   }
 }
-
-const DishDetail = (props) => {
-  return (
-    <div className='container'>
-      <div className='row'>
-        <Breadcrumb>
-          <BreadcrumbItem>
-            <Link to='/menu'>Menu</Link>
-          </BreadcrumbItem>
-          <BreadcrumbItem active>{props.dish.name}</BreadcrumbItem>
-        </Breadcrumb>
-        <div className='col-12'>
-          <h3>{props.dish.name}</h3>
-          <hr />
-        </div>
-      </div>
-      <div className='row'>
-        <div className='col-12 col-md-5 m-1'>
-          <RenderDish dish={props.dish} />
-        </div>
-        <div className='col-12 col-md-5 m-1'>
-          <RenderComments
-            comments={props.comments}
-            addComment={props.addComment}
-            dishId={props.dish.id}
-          />
-          <CommentForm dishId={props.dish.id} addComment={props.addComment} />
-        </div>
-      </div>
-    </div>
-  )
-}
-
-export default DishDetail
