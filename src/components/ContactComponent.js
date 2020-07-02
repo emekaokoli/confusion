@@ -1,6 +1,6 @@
 
 import React, { Component } from 'react';
-import { Control, Errors, LocalForm } from 'react-redux-form';
+import { Control, Errors, Form } from 'react-redux-form';
 import { Link } from 'react-router-dom';
 import { Breadcrumb, BreadcrumbItem, Button, Col, Label, Row } from 'reactstrap';
 
@@ -12,7 +12,6 @@ class Contact extends Component {
   constructor(props) {
     super(props)
     this.handleSubmit = this.handleSubmit.bind(this)
-    
   }
 
   // handleInputChange(event) {
@@ -25,10 +24,11 @@ class Contact extends Component {
   //   })
   // }
 
-  handleSubmit(event) {
-    console.log('Current State is: ' + JSON.stringify(this.state))
-    alert('Current State is: ' + JSON.stringify(this.state))
-    event.preventDefault()
+  handleSubmit(values) {
+    console.log('Current State is: ' + JSON.stringify(this.state.values))
+    alert('Current State is: ' + JSON.stringify(this.state.values))
+    this.props.resetFeedbackForm()
+    // event.preventDefault()
     this.setState({
       firstname: '',
       lastname: '',
@@ -44,41 +44,39 @@ class Contact extends Component {
         email: false,
       },
     })
-
- 
   }
-// handleBlur= (field) => (event) =>{
-//   this.setState({
-//     touched:{...this.state.touched, [field]:true}
-//   })
-// }
+  // handleBlur= (field) => (event) =>{
+  //   this.setState({
+  //     touched:{...this.state.touched, [field]:true}
+  //   })
+  // }
 
-// validate(firstname, lastname, telnum, email){
-//   const errors = {
-//     firstname: '',
-//     lastname: '',
-//     telnum: '',
-//     email: ''
-//   }
+  // validate(firstname, lastname, telnum, email){
+  //   const errors = {
+  //     firstname: '',
+  //     lastname: '',
+  //     telnum: '',
+  //     email: ''
+  //   }
 
-//   if (this.state.touched.firstname && firstname.length < 3)
-//     errors.firstname = 'First Name should be >=3 characters'
-//   else if (this.state.touched.firstname && firstname.length >10)
-//     errors.firstname = 'First Name should be <= 10 characters'
+  //   if (this.state.touched.firstname && firstname.length < 3)
+  //     errors.firstname = 'First Name should be >=3 characters'
+  //   else if (this.state.touched.firstname && firstname.length >10)
+  //     errors.firstname = 'First Name should be <= 10 characters'
 
-//  if (this.state.touched.lastname && lastname.length < 3)
-//     errors.lastname = 'Last Name should be >=3 characters'
-//   else if (this.state.touched.lastname && lastname.length >10)
-//     errors.lastname = 'Last Name should be <= 10 characters'
-// const reg = /^\d+$/;
-//  if (this.state.touched.telnum && ! reg.test(telnum))
-//  errors.telnum = 'Tel. Number should contain only numbers'
-  
-//  if (this.state.touched.email && email.split('').filter(x => x === '@').length !== 1)
-//  errors.email = 'Email should contain an @ symbol'
+  //  if (this.state.touched.lastname && lastname.length < 3)
+  //     errors.lastname = 'Last Name should be >=3 characters'
+  //   else if (this.state.touched.lastname && lastname.length >10)
+  //     errors.lastname = 'Last Name should be <= 10 characters'
+  // const reg = /^\d+$/;
+  //  if (this.state.touched.telnum && ! reg.test(telnum))
+  //  errors.telnum = 'Tel. Number should contain only numbers'
 
-//  return errors
-// }
+  //  if (this.state.touched.email && email.split('').filter(x => x === '@').length !== 1)
+  //  errors.email = 'Email should contain an @ symbol'
+
+  //  return errors
+  // }
   render() {
     const required = (val) => val && val.length
     const maxLength = (len) => (val) => !val || val.length <= len
@@ -153,7 +151,10 @@ class Contact extends Component {
             <h3>Send us your Feedback</h3>
           </div>
           <div className='col-12 col-md-9'>
-            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+            <Form
+              model='feedback'
+              onSubmit={(values) => this.handleSubmit(values)}
+            >
               <Row className='form-group'>
                 <Label htmlFor='firstname' md={2}>
                   First Name
@@ -314,13 +315,13 @@ class Contact extends Component {
                   <Button
                     type='submit'
                     color='primary'
-                    onClick={(e) => this.handleSubmit(e)}
+                    // onClick={(e) => this.handleSubmit(e)}
                   >
                     Send Feedback
                   </Button>
                 </Col>
               </Row>
-            </LocalForm>
+            </Form>
           </div>
         </div>
       </div>

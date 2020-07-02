@@ -1,5 +1,5 @@
 import React from 'react'
-import { Control, Errors, LocalForm } from 'react-redux-form'
+import { Control, Errors, Form } from 'react-redux-form'
 import { Link } from 'react-router-dom'
 import {
   Breadcrumb,
@@ -17,13 +17,18 @@ import {
   ModalHeader,
   Row
 } from 'reactstrap'
+import { baseUrl } from '../shared/baseUrl'
 import { Loading } from './LoadingComponent'
+
+
+
+
 function RenderDish({ dish }) {
   if (dish !== null) {
     return (
       <div>
         <Card>
-          <CardImg top src={dish.image} alt={dish.name} />
+          <CardImg top src={baseUrl + dish.image} alt={dish.name} />
           <CardBody>
             <CardTitle>{dish.name}</CardTitle>
             <CardText>{dish.description}</CardText>
@@ -35,27 +40,31 @@ function RenderDish({ dish }) {
     return <></>
   }
 }
-//TODO  victor I want to access {addComment and dishId} below where I rendered.
 function RenderComments({comments, addComment, dishId}){
-  
   if (comments !== null) {
-    return comments.map((param) => {
-      return (
-        <div key={param.id}>
-          <ul className='list-unstyled'>
-            <li>{param.comment}</li>
-            <li>
-              --{param.author} ,
-              {new Intl.DateTimeFormat('en-US', {
-                year: 'numeric',
-                month: 'short',
-                day: '2-digit',
-              }).format(new Date(param.date))}
-            </li>
-          </ul>
-        </div>
-      )
-    })
+    return <>
+      {comments.map((param) => {
+        return (
+          <div key={param.id}>
+            <ul className='list-unstyled'>
+              <li>{param.comment}</li>
+              <li>
+                --{param.author} ,
+                {new Intl.DateTimeFormat('en-US', {
+                  year: 'numeric',
+                  month: 'short',
+                  day: '2-digit',
+                }).format(new Date(param.date))}
+              </li>
+            </ul>
+          </div>
+        )
+      })
+      }
+      <CommentForm dishId={dishId} addComment={addComment} />
+      
+    </>
+    
   } else {
     return <></>
   }
@@ -80,21 +89,20 @@ class CommentForm extends React.Component {
   }
 
   handleSubmit(values) {
+   
     this.toggle()
-    this.props.addComment(
-      this.props.dishId,
-      values.rating,
-      values.author,
-      values.comment,
-    )
+    this.props.addComment(this.props.dishId,values.rating,
+      values.author,values.message)
+    this.props.resetFeedbackForm()
+   
     // e.preventDefault()
     this.setState({
+      rating: 0,
       author: '',
-      rating: '',
       message: '',
       touched: {
+        rating: false,
         author: false,
-        ratings: false,
         message: false,
       },
     })
@@ -112,7 +120,10 @@ class CommentForm extends React.Component {
         <Modal isOpen={this.state.isModalOpen} toggle={this.toggle}>
           <ModalHeader toggle={this.toggle}>Comments form</ModalHeader>
           <ModalBody>
-            <LocalForm onSubmit={(values) => this.handleSubmit(values)}>
+            <Form
+              model='feedback'
+              onSubmit={(values) => this.handleSubmit(values)}
+            >
               <Row className='form-group'>
                 <Col className='form-select'>
                   <Label
@@ -186,11 +197,11 @@ class CommentForm extends React.Component {
                 type='submit'
                 // value='submit'
                 color='primary'
-                onClick={(e) => this.handleSubmit(e)}
+                // onClick={(e) => this.handleSubmit(e)}
               >
                 Submit
               </Button>
-            </LocalForm>
+            </Form>
           </ModalBody>
         </Modal>
       </>
@@ -199,6 +210,9 @@ class CommentForm extends React.Component {
 }
 
 const DishDetail = (props) => {
+  console.log('=================dish detail component===================');
+  console.log(props);
+  console.log('====================================');
   if (props.isLoading) {
     return (
       <div className='container'>
@@ -213,7 +227,7 @@ const DishDetail = (props) => {
         <div className='row'>
           <h4>{props.errMess}</h4>
         </div>
-      </div>
+      </div> 
     )
   } else {
     return (
@@ -240,11 +254,6 @@ const DishDetail = (props) => {
               addComment={props.addComment}
               dishId={props.dish.id}
             />
-            {/* //TODO  {addComment and dishId} it already destruture at RENDERCOMMENTS component  
-          //TODO  i am supposed to do this dishId={dishId} and addComment={addComment} ,
-          //TODO  since its already destrutured inside  RenderComments but its sayin its not defined, 
-          //TODO  because I cannot access it outside of the function */}
-            <CommentForm dishId={dishId} addComment={addComment} />
           </div>
         </div>
       </div>
