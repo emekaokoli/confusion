@@ -7,7 +7,7 @@ export const initialFeedback ={
   contactType: 'Tel.',
   message:'',
 
-  author:'',
-  ratings: 0,
+  // author:'',
+  // ratings: 0,
   
 }
