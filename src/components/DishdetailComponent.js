@@ -40,7 +40,7 @@ function RenderDish({ dish }) {
     return <></>
   }
 }
-function RenderComments({comments, addComment, dishId}){
+function RenderComments({comments, postComment, dishId}){
   if (comments !== null) {
     return <>
       {comments.map((param) => {
@@ -61,7 +61,7 @@ function RenderComments({comments, addComment, dishId}){
         )
       })
       }
-      <CommentForm dishId={dishId} addComment={addComment} />
+      <CommentForm dishId={dishId} postComment={postComment} />
       
     </>
     
@@ -91,13 +91,13 @@ class CommentForm extends React.Component {
   handleSubmit(values) {
    
     this.toggle()
-    this.props.addComment(this.props.dishId,values.rating,
+    this.props.postComment(this.props.dishId, values.rating,
       values.author,values.message)
     this.props.resetFeedbackForm()
    
     // e.preventDefault()
     this.setState({
-      rating: 0,
+      rating: '',
       author: '',
       message: '',
       touched: {
@@ -251,7 +251,7 @@ const DishDetail = (props) => {
           <div className='col-12 col-md-5 m-1'>
             <RenderComments
               comments={props.comments}
-              addComment={props.addComment}
+              postComment={props.postComment}
               dishId={props.dish.id}
             />
           </div>
