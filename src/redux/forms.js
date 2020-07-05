@@ -1,13 +1,15 @@
 export const initialFeedback ={
-  firstName:'',
-  lastName:'',
+  firstname:'',
+  lastname:'',
   telnum:'',
   email:'',
   agree: false,
   contactType: 'Tel.',
   message:'',
+}
 
-  // author:'',
-  // ratings: 0,
-  
+export const commentsInitial ={
+  rating:'',
+  author:'',
+  message:''
 }

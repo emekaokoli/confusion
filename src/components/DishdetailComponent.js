@@ -1,40 +1,35 @@
 import React from 'react'
+import { Fade, FadeTransform, Stagger } from 'react-animation-components'
 import { Control, Errors, Form } from 'react-redux-form'
 import { Link } from 'react-router-dom'
 import {
-  Breadcrumb,
-  BreadcrumbItem,
-  Button,
-  Card,
-  CardBody,
-  CardImg,
-  CardText,
-  CardTitle,
-  Col,
-  Label,
-  Modal,
-  ModalBody,
-  ModalHeader,
-  Row
+  Breadcrumb, BreadcrumbItem, Button, Card, CardBody, CardImg,
+  CardText, CardTitle, Col, Label, Modal, ModalBody, ModalHeader, Row
 } from 'reactstrap'
 import { baseUrl } from '../shared/baseUrl'
 import { Loading } from './LoadingComponent'
 
 
 
-
 function RenderDish({ dish }) {
   if (dish !== null) {
     return (
-      <div>
-        <Card>
-          <CardImg top src={baseUrl + dish.image} alt={dish.name} />
-          <CardBody>
-            <CardTitle>{dish.name}</CardTitle>
-            <CardText>{dish.description}</CardText>
-          </CardBody>
-        </Card>
-      </div>
+      <>
+        <FadeTransform
+          in
+          transformProps={{
+            exitTransform: 'scale(0.5) translateY(-50%)',
+          }}
+        >
+          <Card>
+            <CardImg top src={baseUrl + dish.image} alt={dish.name} />
+            <CardBody>
+              <CardTitle>{dish.name}</CardTitle>
+              <CardText>{dish.description}</CardText>
+            </CardBody>
+          </Card>
+        </FadeTransform>
+      </>
     )
   } else {
     return <></>
@@ -42,28 +37,33 @@ function RenderDish({ dish }) {
 }
 function RenderComments({comments, postComment, dishId}){
   if (comments !== null) {
-    return <>
-      {comments.map((param) => {
-        return (
-          <div key={param.id}>
-            <ul className='list-unstyled'>
-              <li>{param.comment}</li>
-              <li>
-                --{param.author} ,
-                {new Intl.DateTimeFormat('en-US', {
-                  year: 'numeric',
-                  month: 'short',
-                  day: '2-digit',
-                }).format(new Date(param.date))}
-              </li>
-            </ul>
-          </div>
-        )
-      })
-      }
-      <CommentForm dishId={dishId} postComment={postComment} />
-      
-    </>
+    return (
+      <>
+        <Stagger in>
+          {comments.map((param) => {
+         
+            return (
+              <Fade in key={param.id}>
+                <div>
+                  <ul className='list-unstyled'>
+                    <li>{param.comment}</li>
+                    <li>
+                      --{param.author} ,
+                      {new Intl.DateTimeFormat('en-US', {
+                        year: 'numeric',
+                        month: 'short',
+                        day: '2-digit',
+                      }).format(new Date(param.date))}
+                    </li>
+                  </ul>
+                </div>
+              </Fade>
+            )
+          })}
+          <CommentForm dishId={dishId} postComment={postComment}  />
+        </Stagger>
+      </>
+    )
     
   } else {
     return <></>
@@ -79,7 +79,7 @@ class CommentForm extends React.Component {
     }
 
     this.toggle = this.toggle.bind(this)
-    this.handleSubmit = this.handleSubmit.bind(this)
+    this.handleCommentSubmit = this.handleCommentSubmit.bind(this)
   }
 
   toggle() {
@@ -88,12 +88,13 @@ class CommentForm extends React.Component {
     })
   }
 
-  handleSubmit(values) {
-   
+  handleCommentSubmit(values) {
+
+   console.log('comment posted: ' + JSON.stringify(values))
+   alert('comment posted: ' + JSON.stringify(values))
     this.toggle()
     this.props.postComment(this.props.dishId, values.rating,
       values.author,values.message)
-    this.props.resetFeedbackForm()
    
     // e.preventDefault()
     this.setState({
@@ -101,9 +102,7 @@ class CommentForm extends React.Component {
       author: '',
       message: '',
       touched: {
-        rating: false,
         author: false,
-        message: false,
       },
     })
   }
@@ -121,14 +120,14 @@ class CommentForm extends React.Component {
           <ModalHeader toggle={this.toggle}>Comments form</ModalHeader>
           <ModalBody>
             <Form
-              model='feedback'
-              onSubmit={(values) => this.handleSubmit(values)}
+              model='userComment'
+              onSubmit={(values) => this.handleCommentSubmit(values)}
             >
               <Row className='form-group'>
                 <Col className='form-select'>
                   <Label
-                    htmlFor='rating'
-                    name='rating'
+                    htmlFor='userComment.rating'
+                    name='userComment.rating'
                     className='form-check-input'
                     md={{ size: 2, offset: 2 }}
                   >
@@ -137,8 +136,8 @@ class CommentForm extends React.Component {
                 </Col>
                 <Col md={{ size: 10, offset: 1 }}>
                   <Control.select
-                    model='.rating'
-                    name='rating'
+                    model='userComment.rating'
+                    name='userComment.rating'
                     className='form-control'
                   >
                     <option>0</option>
@@ -151,14 +150,14 @@ class CommentForm extends React.Component {
                 </Col>
               </Row>
               <Row className='form-group'>
-                <Label htmlFor='author' md={2}>
+                <Label htmlFor='userComment.author' md={2}>
                   Your Name
                 </Label>
                 <Col md={10}>
                   <Control.text
-                    model='.author'
-                    id='author'
-                    name='author'
+                    model='userComment.author'
+                    id='userComment.author'
+                    name='userComment.author'
                     placeholder='Your Name'
                     className='form-control'
                     validators={{
@@ -169,7 +168,7 @@ class CommentForm extends React.Component {
                   />
                   <Errors
                     className='text-danger'
-                    model='.author'
+                    model='userComment.author'
                     show='touched'
                     messages={{
                       required: 'Required ',
@@ -180,14 +179,14 @@ class CommentForm extends React.Component {
                 </Col>
               </Row>
               <Row className='form-group'>
-                <Label htmlFor='message' md={2}>
+                <Label htmlFor='userComment.message' md={2}>
                   Your Feedback
                 </Label>
                 <Col md={10}>
                   <Control.textarea
-                    model='.message'
-                    id='message'
-                    name='message'
+                    model='userComment.message'
+                    id='userComment.message'
+                    name='userComment.message'
                     rows='6'
                     className='form-control'
                   />
@@ -210,9 +209,7 @@ class CommentForm extends React.Component {
 }
 
 const DishDetail = (props) => {
-  console.log('=================dish detail component===================');
-  console.log(props);
-  console.log('====================================');
+
   if (props.isLoading) {
     return (
       <div className='container'>

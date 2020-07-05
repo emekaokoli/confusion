@@ -201,6 +201,22 @@
       "comment": "It's your birthday, we're gonna party!",
       "author": "25 Cent",
       "date": "2011-12-02T17:57:28.556094Z"
+    },
+    {
+      "dishId": 1,
+      "rating": "5",
+      "author": "EMEKA",
+      "comment": "HELLO FROM COMMENT",
+      "date": "2020-07-05T10:22:34.185Z",
+      "id": 20
+    },
+    {
+      "dishId": 1,
+      "rating": "4",
+      "author": "Jane Doe",
+      "comment": "Jane doe here, I love this",
+      "date": "2020-07-05T10:27:33.705Z",
+      "id": 21
     }
   ],
   "promotions": [
@@ -263,6 +279,27 @@
       "message": "afadsfds",
       "date": "2017-12-04T09:41:49.890Z",
       "id": 1
+    },
+    {
+      "firstname": "Emeka",
+      "lastname": "Okoli",
+      "telnum": "1234567789",
+      "email": "emekaokoli00@gmail.com",
+      "agree": false,
+      "contactType": "Tel.",
+      "message": "hello world",
+      "id": 2
+    },
+    {
+      "firstname": "james",
+      "lastname": "john",
+      "telnum": "223333",
+      "email": "j@mail.com",
+      "agree": false,
+      "contactType": "Tel.",
+      "message": "this is for you james",
+      "date": "2020-07-05T10:53:17.560Z",
+      "id": 3
     }
   ]
 }
